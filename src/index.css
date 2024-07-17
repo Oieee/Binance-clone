@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Custom tooltip */
+.tooltip .tooltiptext::after {
+  content: "";
+  @apply absolute bottom-full left-1/2 transform -translate-x-1/2;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent rgb(209 213 219) transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  @apply visible;
+}
+
+/* Custom placeholder */
+.placeholder-bold::placeholder {
+  font-weight: normal;
+}
+
+/* Custom scrollbar */
+
+/* Định dạng toàn bộ thanh cuộn. */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Định dạng thanh kéo của thanh cuộn. */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #5e6673;
+  border-radius: 4px;
+}
+
+/* Định dạng thanh kéo khi hover. */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+}
+
+/* Định dạng vùng track của thanh cuộn. */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #1c2127;
+}
+
+/* Custom number input */
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
