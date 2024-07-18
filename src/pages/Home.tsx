@@ -5,15 +5,12 @@ import { Coin } from "../models/coin";
 import {
   AdjustmentsHorizontalIcon,
   ChevronDownIcon,
-  ChevronUpDownIcon,
   ChevronUpIcon,
   DocumentMagnifyingGlassIcon,
-  MagnifyingGlassCircleIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/16/solid";
-import { formatBillion, formatPrice, formatPriceV2, sortData } from "../utils";
-import Pagination from "../components/Pagination";
-import { useQuery } from "@tanstack/react-query";
+import { formatBillion, formatPriceV2, sortData } from "../utils";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import PaginationV2 from "../components/PaginationV2";
 import { useQueryString } from "../utils/utils";
@@ -80,6 +77,7 @@ const Home = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["getAllCoins", page],
     queryFn: () => coinApi.getAllCoins(page),
+    placeholderData: keepPreviousData,
   });
 
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -92,11 +90,9 @@ const Home = () => {
     focus: false,
   });
 
-  // const [page, setPage] = useState<number>(1);
-
   const [sortBy, setSortBy] = useState<string>("default");
   const [sortedData, setSortedData] = useState<Coin[]>([]);
-  const [periodTime, setPeriodTime] = useState<string>("priceChange1h");
+  const [periodTime, setPeriodTime] = useState<string>("1h");
 
   useEffect(() => {
     if (data?.result) {
@@ -144,7 +140,7 @@ const Home = () => {
   };
 
   const handleChangePeriodTime = (type: string) => {
-    setPeriodTime(`priceChange${type}`);
+    setPeriodTime(type);
   };
 
   return (
@@ -365,7 +361,11 @@ const Home = () => {
                     coin.priceChange1h < 0 ? "text-red-600" : "text-green-600"
                   }`}
                 >
-                  {coin.priceChange1h}%
+                  {periodTime === "1h"
+                    ? coin.priceChange1h
+                    : (periodTime === "1d" && coin.priceChange1d) ||
+                      (periodTime === "1w" && coin.priceChange1w)}
+                  %
                 </td>
 
                 <td>{formatBillion(coin.volume)}</td>
