@@ -10,7 +10,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/16/solid";
 import { formatBillion, formatPriceV2, sortData } from "../utils";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import PaginationV2 from "../components/PaginationV2";
 import { useQueryString } from "../utils/utils";
@@ -77,7 +77,6 @@ const Home = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["getAllCoins", page],
     queryFn: () => coinApi.getAllCoins(page),
-    placeholderData: keepPreviousData,
   });
 
   const [totalPage, setTotalPage] = useState<number>(0);
@@ -121,7 +120,8 @@ const Home = () => {
     .slice(0, 3);
 
   const handleItemClick = (coinId: string) => {
-    navigate("/price?coinId=" + coinId);
+    navigate("/price/" + coinId);
+    // navigate("/price?coinId=" + coinId);
   };
 
   const handleChangeSort = (type: string) => {

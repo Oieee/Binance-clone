@@ -7,16 +7,17 @@ import ChartComponent from "../components/Chart";
 import VoteCoin from "../components/VoteCoin";
 import { useQueryString } from "../utils/utils";
 import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 const MAX_LENGTH = 10;
 const IS_STRING = /^\d*$/;
 
 const Price: React.FC = () => {
-  const queryString: { coinId?: string } = useQueryString();
-
+  // const queryString: { coinId?: string } = useQueryString();
+  const { coinId } = useParams();
   const { data, isLoading } = useQuery({
-    queryKey: ["getCoinDetail", queryString.coinId],
-    queryFn: () => coinApi.getCoinDetails(queryString.coinId || ""),
+    queryKey: ["getCoinDetail", coinId],
+    queryFn: () => coinApi.getCoinDetails(coinId || ""),
   });
 
   const [quantity, setQuantity] = useState<string>("");

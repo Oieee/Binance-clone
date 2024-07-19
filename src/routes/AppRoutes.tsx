@@ -8,9 +8,9 @@ import Login from "../pages/Login";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/coin" element={<Home />} />
+      <Route path="/markets" element={<Home />} />
       <Route path="/about" element={<About />} />
-      <Route path="/price" element={<Price />} />
+      <Route path="/price/:coinId" element={<Price />} />
       <Route path="/login" element={<Login />} />
     </Routes>
   );
