@@ -15,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import coinApi from "../api/coinApi";
 import { useParams } from "react-router-dom";
 import loadingIcon from "../assets/loading.svg";
+import { ConvertTimeStampsToDate } from "../utils";
 
 const listPeriod = [
   {
@@ -72,14 +73,16 @@ const ChartComponent: React.FC = () => {
 
   const transformLabels = () => {
     return coinChartData?.data.map((item: any) =>
-      new Date(item[0] * 1000).toLocaleDateString("vi-VN")
+      // new Date(item[0] * 1000).toLocaleDateString("vi-VN")
+      ConvertTimeStampsToDate(item[0])
     );
   };
+  // Page last updated: {displayUpdatedTime().slice(-1)[0]}
 
   const displayUpdatedTime = () => {
-    return coinChartData?.data.map((item: any) =>
-      new Date(item[0] * 1000).toLocaleDateString("vi-VN")
-    );
+    const lastest = coinChartData?.data[coinChartData?.data.length - 1][0];
+    const convert = ConvertTimeStampsToDate(lastest);
+    return convert;
   };
 
   const dataSet: ChartData<"line"> = {
@@ -97,11 +100,6 @@ const ChartComponent: React.FC = () => {
 
   const options: ChartOptions<"line"> = {
     responsive: true,
-    // plugins: {
-    //   legend: {
-    //     position: "top",
-    //   },
-    // },
   };
 
   const handleChangePeriod = (value: string) => {
@@ -140,7 +138,7 @@ const ChartComponent: React.FC = () => {
 
       <Line data={dataSet} options={options} />
       <p className="text-gray-500 text-sm mt-4">
-        Page last updated: {displayUpdatedTime().slice(-1)[0]}
+        Page last updated: {displayUpdatedTime()}
       </p>
     </div>
   );

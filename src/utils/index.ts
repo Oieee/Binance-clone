@@ -72,6 +72,15 @@ const sortData = (data: any, type: string) => {
   return sorted;
 };
 
+const ConvertTimeStampsToDate = (timeStamps: number) => {
+  return new Date(timeStamps * 1000).toLocaleDateString("vi-VN");
+};
 
-
-export { formatPrice, formatPriceV2, formatBillion, limitLength, sortData };
+export {
+  formatPrice,
+  formatPriceV2,
+  formatBillion,
+  limitLength,
+  sortData,
+  ConvertTimeStampsToDate,
+};
